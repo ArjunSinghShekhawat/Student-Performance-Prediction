@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Student Exam Performance Indicator</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <style>
+      body {
+        font-family: "Arial", sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+      }
+      .container {
+        max-width: 600px;
+        margin: 50px auto;
+        padding: 20px;
+        background: #fff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      h1 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #333;
+      }
+      h2 {
+        text-align: center;
+        margin-top: 20px;
+        color: #333;
+      }
+      .form-group {
+        margin-bottom: 15px;
+      }
+      .form-group label {
+        display: block;
+        margin-bottom: 5px;
+        color: #555;
+      }
+      .form-group select,
+      .form-group input {
+        width: 100%;
+        padding: 10px;
+        box-sizing: border-box;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+      .form-group input[type="number"] {
+        -moz-appearance: textfield;
+      }
+      .form-group input[type="number"]::-webkit-outer-spin-button,
+      .form-group input[type="number"]::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+      .btn {
+        display: inline-block;
+        width: 100%;
+        padding: 10px;
+        background: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        text-align: center;
+        font-size: 16px;
+      }
+      .btn:hover {
+        background: #0056b3;
+      }
+      .form-control:invalid {
+        border-color: red;
+      }
+      .form-control:valid {
+        border-color: green;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Student Exam Performance Indicator</h1>
+      <form
+        action="{{ url_for('predict_datapoint') }}"
+        method="post"
+        id="performance-form"
+      >
+        <div class="form-group">
+          <label for="gender">Gender</label>
+          <select class="form-control" name="gender" id="gender" required>
+            <option class="placeholder" selected disabled value="">
+              Select your Gender
+            </option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="ethnicity">Race or Ethnicity</label>
+          <select
+            class="form-control"
+            name="race/ethnicity"
+            id="ethnicity"
+            required
+          >
+            <option class="placeholder" selected disabled value="">
+              Select Ethnicity
+            </option>
+            <option value="group A">Group A</option>
+            <option value="group B">Group B</option>
+            <option value="group C">Group C</option>
+            <option value="group D">Group D</option>
+            <option value="group E">Group E</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="parent-education">Parental Level of Education</label>
+          <select
+            class="form-control"
+            name="parental level of education"
+            id="parent-education"
+            required
+          >
+            <option class="placeholder" selected disabled value="">
+              Select Parent Education
+            </option>
+            <option value="associate's degree">Associate's Degree</option>
+            <option value="bachelor's degree">Bachelor's Degree</option>
+            <option value="high school">High School</option>
+            <option value="master's degree">Master's Degree</option>
+            <option value="some college">Some College</option>
+            <option value="some high school">Some High School</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="lunch">Lunch Type</label>
+          <select class="form-control" name="lunch" id="lunch" required>
+            <option class="placeholder" selected disabled value="">
+              Select Lunch Type
+            </option>
+            <option value="free/reduced">Free/Reduced</option>
+            <option value="standard">Standard</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="test-course">Test Preparation Course</label>
+          <select
+            class="form-control"
+            name="test preparation course"
+            id="test-course"
+            required
+          >
+            <option class="placeholder" selected disabled value="">
+              Select Test Course
+            </option>
+            <option value="none">None</option>
+            <option value="completed">Completed</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="reading-score">Reading Score out of 100</label>
+          <input
+            class="form-control"
+            type="number"
+            name="reading score"
+            id="reading-score"
+            placeholder="Enter your Reading score"
+            min="0"
+            max="100"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="writing-score">Writing Score out of 100</label>
+          <input
+            class="form-control"
+            type="number"
+            name="writing score"
+            id="writing-score"
+            placeholder="Enter your Writing Score"
+            min="0"
+            max="100"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <button class="btn" type="submit">Predict your Maths Score</button>
+        </div>
+      </form>
+      <h2 id="result">Th prediction of math score {{results}}</h2>
+    </div>
+
+    <script>
+      document
+        .getElementById("performance-form")
+        .addEventListener("submit", function (e) {
+          const form = e.target;
+          const isValid = form.checkValidity();
+          if (!isValid) {
+            e.preventDefault();
+            alert("Please fill out all required fields correctly.");
+          }
+        });
+    </script>
+  </body>
+</html>
